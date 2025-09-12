@@ -1,0 +1,35 @@
+package com.dev.agent.controller;
+
+import lombok.RequiredArgsConstructor;
+import com.dev.agent.services.RedeService;
+import org.springframework.data.domain.Page;
+import com.dev.agent.dto.rede.RedeResponseDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/rede")
+public class RedeController {
+
+    private final RedeService redeService;
+    @GetMapping
+    public ResponseEntity<Page<RedeResponseDTO>> findAll(Pageable pageable) {
+
+        Page<RedeResponseDTO> dtoPage = redeService.findAll(pageable);
+
+        return ResponseEntity.ok(dtoPage);
+    }
+
+    @GetMapping("/{rede}")
+    public ResponseEntity<Page<RedeResponseDTO>> findByRede(@PathVariable("rede") String rede, Pageable pageable  ) {
+
+        Page<RedeResponseDTO> dtoPage = redeService.findByRede(pageable, rede);
+
+        return ResponseEntity.ok(dtoPage);
+    }
+}
