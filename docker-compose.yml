@@ -15,16 +15,16 @@ services:
     volumes:
       - ./minio:/data
 
-  # RabbitMQ com plugin de management
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbit
-    ports:
-      - "5672:5672" # conexão de apps
-      - "15672:15672" # painel web
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+#  # RabbitMQ com plugin de management
+#  rabbitmq:
+#    image: rabbitmq:3-management
+#    container_name: rabbit
+#    ports:
+#      - "5672:5672" # conexão de apps
+#      - "15672:15672" # painel web
+#    environment:
+#      RABBITMQ_DEFAULT_USER: guest
+#      RABBITMQ_DEFAULT_PASS: guest
 
   # PostgreSQL
   postgres:

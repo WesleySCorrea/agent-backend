@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
   datasource:
     url: jdbc:postgresql://localhost:5432/my-agent-postgres
     username: agent
@@ -13,16 +17,12 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host:  ${RAILWAY_TCP_PROXY_DOMAIN}
+    port: ${RAILWAY_TCP_PROXY_PORT}
+    username: ${RABBITMQ_DEFAULT_USER}
+    password: ${RABBITMQ_DEFAULT_PASS}
     template:
       reply-timeout: 5000
-
-app:
-  queue: agent.commands
-  defaultPath: "C:\\Users\\Public"
 
 server:
   port: 8080

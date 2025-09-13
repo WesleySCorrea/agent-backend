@@ -1,0 +1,11 @@
+package com.dev.agent.enums;
+
+public enum CommandEnum {
+    LS("ls"),
+    MKDIR("mkdir"),
+    RM("rm"),
+    DOWN("down"),
+    COPY("copy"),
+    RENAME("rename"),
+    SAVE("save")
+}

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rede")
+@RequestMapping("/redes")
 public class RedeController {
 
     private final RedeService redeService;
@@ -26,7 +26,7 @@ public class RedeController {
     }
 
     @GetMapping("/{rede}")
-    public ResponseEntity<Page<RedeResponseDTO>> findByRede(@PathVariable String rede, Pageable pageable  ) {
+    public ResponseEntity<Page<RedeResponseDTO>> findByRede(@PathVariable("rede") String rede, Pageable pageable  ) {
 
         Page<RedeResponseDTO> dtoPage = redeService.findByRede(pageable, rede);
 
