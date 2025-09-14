@@ -1,5 +1,6 @@
 package com.dev.agent.controller;
 
+import com.dev.agent.dto.DownloadRequestDTO;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.enums.StatusEnum;
 import com.dev.agent.enums.CommandEnum;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import com.dev.agent.services.CommandRpcService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -260,6 +262,42 @@ public class AgentController {
             }
 
             return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            // Erros de input ou de JSON -> 400
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            // Erros inesperados -> 500
+            System.err.println("Erro inesperado ao listar conteúdo do agente: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("error", "Um erro inesperado ocorreu"));
+        }
+    }
+
+    @PostMapping("/list-download")
+    public ResponseEntity<?> listDownload(@RequestBody DownloadRequestDTO request) {
+
+        String url = request.getUrl();
+        List<String> agentAddresses = request.getAgentAddresses();
+
+        try {
+            Map<String, Object> lsCommandPayload = new HashMap<>();
+            lsCommandPayload.put("cmd", CommandEnum.LISTDOWN.getCommand());
+            lsCommandPayload.put("url", url);
+
+            Map<String, Object> response;
+
+            for (String agentAddress : agentAddresses) {
+                new Thread(() -> {
+                    try {
+                        commandRpcService.sendCommandAndReceiveResponse(lsCommandPayload, agentAddress);
+                    } catch (Exception e) {
+                        System.err.println("Erro ao enviar comando para " + agentAddress + ": " + e.getMessage());
+                    }
+                }).start();
+            }
+
+            return ResponseEntity.accepted().body(Map.of("message", "Requisição recebida, processando os downloads"));
 
         } catch (IllegalArgumentException e) {
             // Erros de input ou de JSON -> 400

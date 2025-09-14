@@ -1,0 +1,48 @@
+package com.dev.agent.services.impl;
+
+import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
+import com.dev.agent.entity.Rede;
+import lombok.RequiredArgsConstructor;
+import com.dev.agent.services.RedeService;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import com.dev.agent.repository.RedeRepository;
+import org.springframework.data.domain.Pageable;
+import com.dev.agent.dto.rede.request.RedeRequestDTO;
+import com.dev.agent.dto.rede.response.RedeResponseDTO;
+import com.dev.agent.dto.rede.response.RedeBasicResponseDTO;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class RedeServiceImpl implements RedeService {
+
+    private final RedeRepository redeRepository;
+    @Override
+    public List<RedeBasicResponseDTO> findAll() {
+
+        return redeRepository.findAll().stream().map(RedeBasicResponseDTO::new).toList();
+    }
+
+    @Override
+    public List<RedeWithMercadoResponseDTO> findAllWithMercados() {
+
+        return redeRepository.findAll().stream().map(RedeWithMercadoResponseDTO::new).toList();
+    }
+
+    @Override
+    public Page<RedeResponseDTO> findByRede(Pageable pageable, String rede) {
+
+        return  redeRepository.findByRedeContainingIgnoreCase(rede, pageable)
+                .map(RedeResponseDTO::new);
+    }
+
+    @Override
+    public RedeResponseDTO create(RedeRequestDTO request) {
+
+        Rede rede  = redeRepository.save(request.toEntity());
+
+        return new RedeResponseDTO(rede);
+    }
+}

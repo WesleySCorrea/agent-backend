@@ -1,6 +1,5 @@
 package com.dev.agent.controller;
 
-import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.services.RedeService;
 import org.springframework.data.domain.Page;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.dev.agent.dto.rede.request.RedeRequestDTO;
 import com.dev.agent.dto.rede.response.RedeResponseDTO;
 import com.dev.agent.dto.rede.response.RedeBasicResponseDTO;
+import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;

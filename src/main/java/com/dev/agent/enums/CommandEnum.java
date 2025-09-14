@@ -8,7 +8,8 @@ public enum CommandEnum {
     COPY("copy"),
     RENAME("rename"),
     OPEN("open"),
-    SAVE("save");
+    SAVE("save"),
+    LISTDOWN("listdown");
     private final String command;
 
     CommandEnum(String command) {
