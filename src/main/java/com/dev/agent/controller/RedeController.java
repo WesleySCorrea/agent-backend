@@ -1,15 +1,17 @@
 package com.dev.agent.controller;
 
+import com.dev.agent.dto.rede.RedeRequestDTO;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.services.RedeService;
 import org.springframework.data.domain.Page;
 import com.dev.agent.dto.rede.RedeResponseDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +33,19 @@ public class RedeController {
         Page<RedeResponseDTO> dtoPage = redeService.findByRede(pageable, rede);
 
         return ResponseEntity.ok(dtoPage);
+    }
+
+    @PostMapping
+    public ResponseEntity<RedeResponseDTO> createRede(@RequestBody RedeRequestDTO request) {
+
+        RedeResponseDTO created = redeService.create(request);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(created);
     }
 }

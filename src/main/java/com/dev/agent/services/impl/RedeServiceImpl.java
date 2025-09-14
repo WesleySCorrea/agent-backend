@@ -1,5 +1,7 @@
 package com.dev.agent.services.impl;
 
+import com.dev.agent.dto.rede.RedeRequestDTO;
+import com.dev.agent.entity.Rede;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.services.RedeService;
 import org.springframework.data.domain.Page;
@@ -25,5 +27,13 @@ public class RedeServiceImpl implements RedeService {
 
         return  redeRepository.findByRedeContainingIgnoreCase(rede, pageable)
                 .map(RedeResponseDTO::new);
+    }
+
+    @Override
+    public RedeResponseDTO create(RedeRequestDTO request) {
+
+        Rede rede  = redeRepository.save(request.toEntity(request));
+
+        return new RedeResponseDTO(rede);
     }
 }
