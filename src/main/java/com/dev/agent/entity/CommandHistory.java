@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import com.dev.agent.enums.StatusEnum;
 import com.dev.agent.enums.CommandEnum;
+import org.simpleframework.xml.Text;
 
 import java.time.LocalDateTime;
 
@@ -34,9 +35,9 @@ public class CommandHistory {
     private StatusEnum status;
     @Column(name = "msg")
     private String msg;
-    @Lob
+    @Column(name = "request_payload", columnDefinition = "TEXT")
     private String requestPayload;
-    @Lob
+    @Column(name = "response_payload", columnDefinition = "TEXT")
     private String responsePayload;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

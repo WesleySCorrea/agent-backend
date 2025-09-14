@@ -6,12 +6,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MinioConfig {
-
     @Bean
     public MinioClient minioClient() {
         return MinioClient.builder()
-                .endpoint("http://localhost:9000")
-                .credentials("minioadmin", "minioadmin123")
+                .endpoint("https://bucket-production-8d15.up.railway.app:443")
+                .credentials("vpRgoa8bF6bl6kPJ0Bj9z8Nc80OMP4ND", "hBoDDtkJnVvmUnUr6g0nbgeJfArEeqHKecTlNoDPv5UWaQI0")
                 .build();
     }
 }

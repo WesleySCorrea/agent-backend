@@ -7,5 +7,23 @@ public enum CommandEnum {
     DOWN("down"),
     COPY("copy"),
     RENAME("rename"),
-    SAVE("save")
+    SAVE("save");
+    private final String command;
+
+    CommandEnum(String command) {
+        this.command = command;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public static CommandEnum fromString(String cmd) {
+        for (CommandEnum c : CommandEnum.values()) {
+            if (c.command.equalsIgnoreCase(cmd)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("Comando inválido: " + cmd);
+    }
 }

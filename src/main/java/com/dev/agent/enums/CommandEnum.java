@@ -7,6 +7,7 @@ public enum CommandEnum {
     DOWN("down"),
     COPY("copy"),
     RENAME("rename"),
+    OPEN("open"),
     SAVE("save");
     private final String command;
 
