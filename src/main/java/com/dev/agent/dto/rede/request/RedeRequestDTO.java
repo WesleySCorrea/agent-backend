@@ -1,4 +1,4 @@
-package com.dev.agent.dto.rede;
+package com.dev.agent.dto.rede.request;
 
 import com.dev.agent.entity.Rede;
 import lombok.Getter;
@@ -8,10 +8,10 @@ public class RedeRequestDTO {
     private String rede;
     private String cnpj;
 
-    public Rede toEntity(RedeRequestDTO redeRequestDTO) {
+    public Rede toEntity( ) {
         Rede rede = new Rede();
-        rede.setRede(redeRequestDTO.getRede());
-        rede.setCnpj(redeRequestDTO.getCnpj());
+        rede.setRede(this.rede);
+        rede.setCnpj(this.cnpj);
         return rede;
     }
 }

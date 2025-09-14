@@ -1,13 +1,16 @@
 package com.dev.agent.services;
 
-import com.dev.agent.dto.rede.RedeRequestDTO;
 import org.springframework.data.domain.Page;
-import com.dev.agent.dto.rede.RedeResponseDTO;
 import org.springframework.data.domain.Pageable;
+import com.dev.agent.dto.rede.request.RedeRequestDTO;
+import com.dev.agent.dto.rede.response.RedeResponseDTO;
+import com.dev.agent.dto.rede.response.RedeBasicResponseDTO;
+
+import java.util.List;
 
 public interface RedeService {
 
-    Page<RedeResponseDTO> findAll(Pageable pageable);
+    List<RedeBasicResponseDTO> findAll();
     Page<RedeResponseDTO> findByRede(Pageable pageable, String rede);
     RedeResponseDTO create(RedeRequestDTO request);
 }

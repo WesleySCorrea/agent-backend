@@ -34,7 +34,7 @@ public class RedeServiceImpl implements RedeService {
     @Override
     public RedeResponseDTO create(RedeRequestDTO request) {
 
-        Rede rede  = redeRepository.save(request.toEntity());
+        Rede rede  = redeRepository.save(request.toEntity(request));
 
         return new RedeResponseDTO(rede);
     }

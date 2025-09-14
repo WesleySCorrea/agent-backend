@@ -1,10 +1,10 @@
-package com.dev.agent.dto.rede;
+package com.dev.agent.dto.rede.response;
 
 import lombok.Getter;
 import lombok.Setter;
 import com.dev.agent.entity.Rede;
 import com.dev.agent.entity.Mercado;
-import com.dev.agent.dto.mercado.MercadoResponseDTO;
+import com.dev.agent.dto.mercado.response.MercadoResponseDTO;
 
 import java.util.List;
 import java.util.ArrayList;
