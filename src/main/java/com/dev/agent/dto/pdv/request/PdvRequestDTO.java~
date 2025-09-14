@@ -1,0 +1,30 @@
+package com.dev.agent.dto.pdv.request;
+
+import com.dev.agent.entity.Mercado;
+import com.dev.agent.entity.Pdv;
+import com.dev.agent.enums.SistemaEnum;
+import lombok.Getter;
+
+@Getter
+public class PdvRequestDTO {
+
+    private String pdvName;
+    private String agentAdress;
+    private String sistema;
+    private String versao;
+    private Long mercadoId;
+
+    public Pdv toEntity() {
+        Pdv pdv = new Pdv();
+        pdv.setPdvName(this.pdvName);
+        pdv.setAgentAdress(this.agentAdress);
+        pdv.setSistema(SistemaEnum.valueOf(this.sistema.toUpperCase()));
+        pdv.setVersao(this.versao);
+
+        Mercado mercado = new Mercado();
+        mercado.setId(this.mercadoId);
+        pdv.setMercado(mercado);
+        
+        return pdv;
+    }
+}

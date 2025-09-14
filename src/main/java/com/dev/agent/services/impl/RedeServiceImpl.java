@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import com.dev.agent.dto.rede.request.RedeRequestDTO;
 import com.dev.agent.dto.rede.response.RedeResponseDTO;
 import com.dev.agent.dto.rede.response.RedeBasicResponseDTO;
+import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
 
 import java.util.List;
 
@@ -22,6 +23,12 @@ public class RedeServiceImpl implements RedeService {
     public List<RedeBasicResponseDTO> findAll() {
 
         return redeRepository.findAll().stream().map(RedeBasicResponseDTO::new).toList();
+    }
+
+    @Override
+    public List<RedeWithMercadoResponseDTO> findAllWithMercados() {
+
+        return redeRepository.findAll().stream().map(RedeWithMercadoResponseDTO::new).toList();
     }
 
     @Override

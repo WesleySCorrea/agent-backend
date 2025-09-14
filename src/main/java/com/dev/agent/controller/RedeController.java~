@@ -3,14 +3,16 @@ package com.dev.agent.controller;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.services.RedeService;
 import org.springframework.data.domain.Page;
-import com.dev.agent.dto.rede.RedeRequestDTO;
-import com.dev.agent.dto.rede.RedeResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import com.dev.agent.dto.rede.request.RedeRequestDTO;
+import com.dev.agent.dto.rede.response.RedeResponseDTO;
+import com.dev.agent.dto.rede.response.RedeBasicResponseDTO;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,11 +21,19 @@ public class RedeController {
 
     private final RedeService redeService;
     @GetMapping
-    public ResponseEntity<Page<RedeResponseDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<List<RedeBasicResponseDTO>> findAll() {
 
-        Page<RedeResponseDTO> dtoPage = redeService.findAll(pageable);
+        List<RedeBasicResponseDTO> redeList = redeService.findAll();
 
-        return ResponseEntity.ok(dtoPage);
+        return ResponseEntity.ok(redeList);
+    }
+
+    @GetMapping("/mercado")
+    public ResponseEntity<List<RedeBasicResponseDTO>> findAllWithMercado() {
+
+        List<RedeBasicResponseDTO> redeList = redeService.findAll();
+
+        return ResponseEntity.ok(redeList);
     }
 
     @GetMapping("/{rede}")

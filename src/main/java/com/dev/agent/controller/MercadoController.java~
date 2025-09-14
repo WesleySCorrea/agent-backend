@@ -1,12 +1,12 @@
 package com.dev.agent.controller;
 
-import lombok.RequiredArgsConstructor;
-import com.dev.agent.services.MercadoService;
-import org.springframework.http.ResponseEntity;
 import com.dev.agent.dto.mercado.request.MercadoRequestDTO;
+import com.dev.agent.services.MercadoService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import com.dev.agent.dto.mercado.response.MercadoResponseDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.dev.agent.dto.mercado.response.MercadoResponseDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

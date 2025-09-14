@@ -1,4 +1,4 @@
-package com.dev.agent.dto.mercado;
+package com.dev.agent.dto.mercado.response;
 
 import lombok.Getter;
 import lombok.Setter;

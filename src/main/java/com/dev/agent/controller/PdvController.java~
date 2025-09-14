@@ -1,12 +1,14 @@
 package com.dev.agent.controller;
 
-import lombok.RequiredArgsConstructor;
+import com.dev.agent.dto.mercado.response.MercadoResponseDTO;
+import com.dev.agent.dto.pdv.request.PdvRequestDTO;
+import com.dev.agent.dto.pdv.response.PdvResponseDTO;
 import com.dev.agent.services.MercadoService;
+import com.dev.agent.services.PdvService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import com.dev.agent.dto.mercado.request.MercadoRequestDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.dev.agent.dto.mercado.response.MercadoResponseDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,14 +17,14 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mercado")
-public class MercadoController {
+@RequestMapping("/pdv")
+public class PdvController {
 
-    private final MercadoService mercadoService;
+    private final PdvService pdvService;
     @PostMapping
-    public ResponseEntity<MercadoResponseDTO> createMercado(@RequestBody MercadoRequestDTO request) {
+    public ResponseEntity<PdvResponseDTO> createMercado(@RequestBody PdvRequestDTO request) {
 
-        MercadoResponseDTO created = mercadoService.create(request);
+        PdvResponseDTO created = pdvService.create(request);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()

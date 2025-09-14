@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import com.dev.agent.entity.Pdv;
 import com.dev.agent.entity.Mercado;
-import com.dev.agent.dto.pdv.PdvResponseDTO;
+import com.dev.agent.dto.pdv.response.PdvResponseDTO;
 
 import java.util.ArrayList;
 import java.util.List;

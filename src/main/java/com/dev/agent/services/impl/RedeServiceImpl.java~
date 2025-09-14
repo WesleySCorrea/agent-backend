@@ -1,5 +1,6 @@
 package com.dev.agent.services.impl;
 
+import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
 import com.dev.agent.entity.Rede;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.services.RedeService;
@@ -25,6 +26,12 @@ public class RedeServiceImpl implements RedeService {
     }
 
     @Override
+    public List<RedeWithMercadoResponseDTO> findAllWithMercados() {
+
+        return redeRepository.findAll().stream().map(RedeWithMercadoResponseDTO::new).toList();
+    }
+
+    @Override
     public Page<RedeResponseDTO> findByRede(Pageable pageable, String rede) {
 
         return  redeRepository.findByRedeContainingIgnoreCase(rede, pageable)
@@ -34,7 +41,7 @@ public class RedeServiceImpl implements RedeService {
     @Override
     public RedeResponseDTO create(RedeRequestDTO request) {
 
-        Rede rede  = redeRepository.save(request.toEntity(request));
+        Rede rede  = redeRepository.save(request.toEntity());
 
         return new RedeResponseDTO(rede);
     }

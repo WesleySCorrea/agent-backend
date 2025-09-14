@@ -1,5 +1,6 @@
 package com.dev.agent.controller;
 
+import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
 import lombok.RequiredArgsConstructor;
 import com.dev.agent.services.RedeService;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,14 @@ public class RedeController {
     public ResponseEntity<List<RedeBasicResponseDTO>> findAll() {
 
         List<RedeBasicResponseDTO> redeList = redeService.findAll();
+
+        return ResponseEntity.ok(redeList);
+    }
+
+    @GetMapping("/mercado")
+    public ResponseEntity<List<RedeWithMercadoResponseDTO>> findAllWithMercado() {
+
+        List<RedeWithMercadoResponseDTO> redeList = redeService.findAllWithMercados();
 
         return ResponseEntity.ok(redeList);
     }
