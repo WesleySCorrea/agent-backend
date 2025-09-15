@@ -1,0 +1,137 @@
+package com.dev.agent.service;
+
+import com.dev.agent.dto.mercado.response.MercadoBasicResponseDTO;
+import com.dev.agent.entity.Mercado;
+import com.dev.agent.entity.Pdv;
+import org.mockito.Mockito;
+import org.instancio.Select;
+import org.instancio.Instancio;
+import com.dev.agent.entity.Rede;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import com.dev.agent.repository.RedeRepository;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import com.dev.agent.services.impl.RedeServiceImpl;
+import com.dev.agent.dto.rede.request.RedeRequestDTO;
+import com.dev.agent.dto.rede.response.RedeResponseDTO;
+import com.dev.agent.dto.rede.response.RedeBasicResponseDTO;
+import com.dev.agent.dto.rede.response.RedeWithMercadoResponseDTO;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+public class RedeServiceImplTest {
+
+    private final RedeRepository redeRepository = Mockito.mock(RedeRepository.class);
+    private final RedeServiceImpl redeService = new RedeServiceImpl(redeRepository);
+
+    @Test
+    void createRede() {
+        RedeRequestDTO request = Instancio.of(RedeRequestDTO.class)
+                .set(Select.field("rede"), "Rede Teste")
+                .create();
+
+        Rede savedEntity = new Rede();
+        savedEntity.setId(1L);
+        savedEntity.setRede(request.getRede());
+
+        Mockito.when(redeRepository.save(Mockito.any(Rede.class))).thenReturn(savedEntity);
+
+        RedeResponseDTO response = redeService.create(request);
+
+        assertEquals(1L, response.getId());
+        assertEquals("Rede Teste", response.getRede());
+
+        Mockito.verify(redeRepository).save(Mockito.argThat(r -> r.getRede().equals(request.getRede())));
+    }
+
+    @Test
+    void findAll() {
+        Rede r1 = new Rede(); r1.setId(1L); r1.setRede("Rede1");
+        Rede r2 = new Rede(); r2.setId(2L); r2.setRede("Rede2");
+
+        Mockito.when(redeRepository.findAll()).thenReturn(List.of(r1, r2));
+
+        List<RedeBasicResponseDTO> result = redeService.findAll();
+
+        assertEquals(2, result.size());
+        assertEquals("Rede1", result.get(0).getRede());
+        assertEquals("Rede2", result.get(1).getRede());
+    }
+
+    @Test
+    void findAllWithMercados() {
+        Rede r1 = Instancio.of(Rede.class)
+                .set(Select.field("id"), 1L)
+                .set(Select.field("rede"), "Rede1")
+                // Cria 2 mercados reais para a entidade
+                .set(Select.field("mercados"), Instancio.ofList(Mercado.class).size(2).create())
+                .create();
+
+        Rede r2 = Instancio.of(Rede.class)
+                .set(Select.field("id"), 2L)
+                .set(Select.field("rede"), "Rede2")
+                .set(Select.field("mercados"), Instancio.ofList(Mercado.class).size(1).create()) // ou vazio
+                .create();
+
+        Mockito.when(redeRepository.findAll()).thenReturn(List.of(r1, r2));
+
+        List<RedeWithMercadoResponseDTO> result = redeService.findAllWithMercados();
+
+        assertEquals(2, result.size());
+
+        assertEquals("Rede1", result.get(0).getRede());
+        assertEquals("Rede2", result.get(1).getRede());
+
+        result.forEach(dto -> assertNotNull(dto.getMercados()));
+    }
+
+    @Test
+    void findByRede() {
+        Pdv pdv = Instancio.of(Pdv.class)
+                .set(Select.field("id"), 1L)
+                .set(Select.field("pdvName"), "PDV Teste")
+                .set(Select.field("sistema"), com.dev.agent.enums.SistemaEnum.WINDOWS)
+                .set(Select.field("agentAdress"), "127.0.0.1")
+                .set(Select.field("versao"), "1.0")
+                .create();
+
+        Mercado mercado = Instancio.of(Mercado.class)
+                .set(Select.field("id"), 1L)
+                .set(Select.field("mercado"), "Mercado Teste")
+                .set(Select.field("cnpj"), "123456789")
+                .set(Select.field("pdvs"), List.of(pdv))
+                .create();
+
+        pdv.setMercado(mercado);
+
+        Rede rede = Instancio.of(Rede.class)
+                .set(Select.field("id"), 1L)
+                .set(Select.field("rede"), "Rede Teste")
+                .set(Select.field("cnpj"), "987654321")
+                .set(Select.field("mercados"), List.of(mercado))
+                .create();
+
+        mercado.setRede(rede);
+
+        Page<Rede> page = new PageImpl<>(List.of(rede));
+        Mockito.when(redeRepository.findByRedeContainingIgnoreCase(
+                        Mockito.anyString(), Mockito.any(Pageable.class)))
+                .thenReturn(page);
+
+        Page<RedeResponseDTO> result = redeService.findByRede(Pageable.unpaged(), "Teste");
+
+        assertEquals(1, result.getContent().size());
+        RedeResponseDTO dto = result.getContent().get(0);
+        assertEquals("Rede Teste", dto.getRede());
+        assertEquals("987654321", dto.getCnpj());
+
+        assertEquals(1, dto.getMercados().size());
+        assertEquals("Mercado Teste", dto.getMercados().get(0).getMercado());
+        assertEquals(1, dto.getMercados().get(0).getPdvs().size());
+        assertEquals("PDV Teste", dto.getMercados().get(0).getPdvs().get(0).getPdvName());
+    }
+}
