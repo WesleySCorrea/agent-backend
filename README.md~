@@ -31,25 +31,26 @@ backend-agent [agent-sender]
 │  ├─ main
 │  │  ├─ java
 │  │  │  └─ com.dev.agent
-│  │  │     ├─ config                   # Configurações da aplicação (CORS, beans, segurança, etc.)
-│  │  │     ├─ controller               # Controladores REST que expõem os endpoints da API
-│  │  │     ├─ dto                      # Objetos de transferência de dados (Data Transfer Objects)
-│  │  │     ├─ entity                   # Entidades do banco de dados
-│  │  │     ├─ enums                    # Enumerações utilizadas na aplicação
-│  │  │     ├─ repository               # Repositórios Spring Data para acesso ao banco
-│  │  │     ├─ services                 # Lógica de negócio da aplicação
-│  │  │     └─ AgentApplication.java    # Classe principal que inicializa a aplicação
+│  │  │     ├─ config       # Configurações da aplicação (CORS, beans, segurança, etc.)
+│  │  │     ├─ controller   # Controladores REST que expõem os endpoints da API
+│  │  │     ├─ dto          # Objetos de transferência de dados (Data Transfer Objects)
+│  │  │     ├─ entity       # Entidades do banco de dados
+│  │  │     ├─ enums        # Enumerações utilizadas na aplicação
+│  │  │     ├─ repository   # Repositórios Spring Data para acesso ao banco
+│  │  │     ├─ services     # Lógica de negócio da aplicação
+│  │  │     └─ AgentApplication.java  # Classe principal que inicializa a aplicação
 │  │  └─ resources
-│  │     └─ application.yml             # Arquivo de configuração do Spring Boot
+│  │     └─ application.yml  # Arquivo de configuração do Spring Boot
 │  │
 │  └─ test
-│     └─ java                           # Testes unitários
+│     └─ java                 # Testes unitários e de integração
 │
-├─ docker-compose.yml                   # Configuração dos containers Docker
-├─ Dockerfile                           # Dockerfile para criar a imagem do backend
-├─ HELP.md                              # Documentação auxiliar
-├─ mvnw / mvnw.cmd                      # Wrapper do Maven
-└─ pom.xml                              # Arquivo de configuração do Maven
+├─ target                    # Artefatos gerados pelo Maven (build)
+├─ docker-compose.yml        # Configuração dos containers Docker
+├─ Dockerfile                # Dockerfile para criar a imagem do backend
+├─ HELP.md                   # Documentação auxiliar
+├─ mvnw / mvnw.cmd            # Wrapper do Maven
+└─ pom.xml                   # Arquivo de configuração do Maven
 ```
 
 ---
