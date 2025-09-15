@@ -9,9 +9,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: agent
-      POSTGRES_PASSWORD: agent123
-      POSTGRES_DB: my-agent-postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - ./../postgres-data:/var/lib/postgresql/data
 
@@ -24,19 +24,16 @@ services:
     ports:
       - "8080:8080"
     environment:
-      FRONTEND_URL: http://localhost:4200
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/my-agent-postgres
-      SPRING_DATASOURCE_USERNAME: agent
-      SPRING_DATASOURCE_PASSWORD: agent123
-      RABBITMQ_DEFAULT_PASS: bJ-QP9VAwOmkmwS7lpsFMwYOx.fpw5Xz
-      RABBITMQ_DEFAULT_USER: vc9uT1COALtJuQEi
-      RAILWAY_TCP_PROXY_DOMAIN: maglev.proxy.rlwy.net
-      RAILWAY_TCP_PROXY_PORT: 10583
-      MINIO_URL: https://bucket-production-8d15.up.railway.app:443
-      MINIO_ACCESS_KEY: vpRgoa8bF6bl6kPJ0Bj9z8Nc80OMP4ND
-      MINIO_SECRET_KEY: hBoDDtkJnVvmUnUr6g0nbgeJfArEeqHKecTlNoDPv5UWaQI0
+      FRONTEND_URL: ${FRONTEND_URL}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RAILWAY_TCP_PROXY_DOMAIN: ${RAILWAY_TCP_PROXY_DOMAIN}
+      RAILWAY_TCP_PROXY_PORT: ${RAILWAY_TCP_PROXY_PORT}
+      MINIO_URL: ${MINIO_URL}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
     depends_on:
       - postgres
-
-
-#docker build -t agent-backend:1.0 . 

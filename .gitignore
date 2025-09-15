@@ -4,6 +4,9 @@
 # IntelliJ IDEA
 .idea/
 
+# Arquivo de variáveis de ambiente
+.env
+
 # Build do Maven/Gradle
 target/
 

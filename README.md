@@ -81,12 +81,12 @@ docker build -t agent-backend:latest .
 
 * Para iniciar todos os serviços definidos no docker-compose.yml:
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 * Para parar os serviços:
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ---
