@@ -23,6 +23,8 @@ spring:
     password: ${RABBITMQ_DEFAULT_PASS}
     template:
       reply-timeout: 5000
+  frontend:
+    url: ${FRONTEND_URL} # http://localhost:4200
 
 server:
   port: 8080

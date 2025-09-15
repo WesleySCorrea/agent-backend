@@ -19,4 +19,13 @@ public enum CommandEnum {
     public String getCommand() {
         return command;
     }
+
+    public static CommandEnum fromString(String cmd) {
+        for (CommandEnum c : CommandEnum.values()) {
+            if (c.command.equalsIgnoreCase(cmd)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("Comando inválido: " + cmd);
+    }
 }

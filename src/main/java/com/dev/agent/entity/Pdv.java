@@ -1,10 +1,10 @@
 package com.dev.agent.entity;
 
-import com.dev.agent.enums.SistemaEnum;
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+import com.dev.agent.enums.SistemaEnum;
 
 @Getter
 @Setter

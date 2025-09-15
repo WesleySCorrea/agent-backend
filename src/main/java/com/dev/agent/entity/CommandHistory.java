@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import com.dev.agent.enums.StatusEnum;
 import com.dev.agent.enums.CommandEnum;
-import org.simpleframework.xml.Text;
 
 import java.time.LocalDateTime;
 

@@ -1,0 +1,52 @@
+package com.dev.agent.controller;
+
+import org.mockito.Mockito;
+import org.instancio.Select;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import com.dev.agent.services.MercadoService;
+import org.springframework.test.web.servlet.MockMvc;
+import com.dev.agent.dto.mercado.request.MercadoRequestDTO;
+import com.dev.agent.dto.mercado.response.MercadoResponseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+@WebMvcTest(MercadoController.class)
+public class MercadoControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @MockitoBean
+    private MercadoService mercadoService;
+    @Test
+    void createMercado() throws Exception {
+
+        MercadoRequestDTO request = Instancio.of(MercadoRequestDTO.class)
+                .set(Select.field("mercado"), "Supermercado Teste")
+                .create();
+
+        MercadoResponseDTO response = Instancio.of(MercadoResponseDTO.class)
+                .set(Select.field("id"), 1L)
+                .set(Select.field("mercado"), request.getMercado())
+                .create();
+
+        Mockito.when(mercadoService.create(Mockito.any(MercadoRequestDTO.class)))
+                .thenReturn(response);
+
+        mockMvc.perform(post("/mercado")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                            {
+                              "mercado": "%s"
+                            }
+                            """.formatted(request.getMercado())))
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.mercado").value("Supermercado Teste"));
+    }
+}

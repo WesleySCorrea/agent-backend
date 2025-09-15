@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import com.dev.agent.entity.CommandHistory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.http.ResponseEntity;
 import com.dev.agent.services.CommandRpcService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dev.agent.services.CommandHistoryService;
@@ -56,7 +55,6 @@ public class CommandRpcServiceImpl implements CommandRpcService {
         if(!cmdStr.equals("ls")) history = historyService.create(agentAddress, "Teste", commandPayload, body);
 
         Object resp = rabbitTemplate.convertSendAndReceive(agentAddress, body);
-
 
         if (resp == null) {
 

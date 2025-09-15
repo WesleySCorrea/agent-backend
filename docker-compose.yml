@@ -1,31 +1,6 @@
 version: '3.8'
 
 services:
-  # MinIO
-  minio:
-    image: quay.io/minio/minio:latest
-    container_name: minio
-    ports:
-      - "9000:9000" # API S3
-      - "9001:9001" # Console Web
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123
-    command: server /data --console-address ":9001"
-    volumes:
-      - ./minio:/data
-
-#  # RabbitMQ com plugin de management
-#  rabbitmq:
-#    image: rabbitmq:3-management
-#    container_name: rabbit
-#    ports:
-#      - "5672:5672" # conexão de apps
-#      - "15672:15672" # painel web
-#    environment:
-#      RABBITMQ_DEFAULT_USER: guest
-#      RABBITMQ_DEFAULT_PASS: guest
-
   # PostgreSQL
   postgres:
     image: postgres:15
@@ -38,4 +13,30 @@ services:
       POSTGRES_PASSWORD: agent123
       POSTGRES_DB: my-agent-postgres
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - ./../postgres-data:/var/lib/postgresql/data
+
+  # Backend
+  agent-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent-backend
+    ports:
+      - "8080:8080"
+    environment:
+      FRONTEND_URL: http://localhost:4200
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/my-agent-postgres
+      SPRING_DATASOURCE_USERNAME: agent
+      SPRING_DATASOURCE_PASSWORD: agent123
+      RABBITMQ_DEFAULT_PASS: bJ-QP9VAwOmkmwS7lpsFMwYOx.fpw5Xz
+      RABBITMQ_DEFAULT_USER: vc9uT1COALtJuQEi
+      RAILWAY_TCP_PROXY_DOMAIN: maglev.proxy.rlwy.net
+      RAILWAY_TCP_PROXY_PORT: 10583
+      MINIO_URL: https://bucket-production-8d15.up.railway.app:443
+      MINIO_ACCESS_KEY: vpRgoa8bF6bl6kPJ0Bj9z8Nc80OMP4ND
+      MINIO_SECRET_KEY: hBoDDtkJnVvmUnUr6g0nbgeJfArEeqHKecTlNoDPv5UWaQI0
+    depends_on:
+      - postgres
+
+
+#docker build -t agent-backend:1.0 . 

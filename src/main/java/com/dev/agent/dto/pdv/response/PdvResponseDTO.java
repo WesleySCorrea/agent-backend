@@ -1,6 +1,7 @@
 package com.dev.agent.dto.pdv.response;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.dev.agent.entity.Pdv;
 

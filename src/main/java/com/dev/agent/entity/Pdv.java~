@@ -27,13 +27,4 @@ public class Pdv {
     @ManyToOne
     @JoinColumn(name = "mercado_id")
     private Mercado mercado;
-
-    public Pdv (Pdv pdv) {
-        this.id = pdv.getId();
-        this.pdvName = pdv.getPdvName();
-        this.sistema = pdv.getSistema();
-        this.agentAdress = pdv.getAgentAdress();
-        this.versao = pdv.getVersao();
-        this.mercado = pdv.getMercado();
-    }
 }

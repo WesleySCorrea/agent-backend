@@ -20,7 +20,7 @@ public class PdvController {
 
     private final PdvService pdvService;
     @PostMapping
-    public ResponseEntity<PdvResponseDTO> createMercado(@RequestBody PdvRequestDTO request) {
+    public ResponseEntity<PdvResponseDTO> createPdv(@RequestBody PdvRequestDTO request) {
 
         PdvResponseDTO created = pdvService.create(request);
 
